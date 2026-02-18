@@ -13,8 +13,9 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Generate Prisma client and build Next.js
+# Note: prisma generate only (migrations run at container startup, not build time)
 RUN npx prisma generate
-RUN npm run build
+RUN npx next build
 
 # Production image
 FROM base AS runner
