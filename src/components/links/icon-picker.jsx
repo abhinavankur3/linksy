@@ -62,16 +62,16 @@ export function IconPicker({ value, onChange, autoDetected }) {
   }
 
   return (
-    <div className="relative" ref={panelRef}>
+    <div className="relative min-w-0" ref={panelRef}>
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 rounded-md border border-gray-300 px-3 py-2 text-sm hover:bg-gray-50"
+        className="flex max-w-full items-center gap-2 rounded-md border border-gray-300 px-3 py-2 text-sm hover:bg-gray-50"
       >
         {selectedIcon ? (
           <>
             <IconSvg icon={selectedIcon} size={16} />
-            <span className="text-gray-700">{selectedIcon.label}</span>
+            <span className="truncate text-gray-700">{selectedIcon.label}</span>
           </>
         ) : autoDetected ? (
           <span className="text-gray-500">Auto-detected (click to change)</span>
@@ -84,7 +84,9 @@ export function IconPicker({ value, onChange, autoDetected }) {
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 top-full z-20 mt-1 w-80 rounded-lg border border-gray-200 bg-white p-3 shadow-lg">
+        <>
+          <div className="fixed inset-0 z-10 bg-black/50 sm:hidden" onClick={() => setIsOpen(false)} />
+          <div className="fixed inset-x-3 bottom-3 z-20 rounded-lg border border-gray-200 bg-white p-3 shadow-lg sm:absolute sm:inset-auto sm:left-0 sm:top-full sm:z-20 sm:mt-1 sm:w-80">
           <input
             type="text"
             value={query}
@@ -111,7 +113,7 @@ export function IconPicker({ value, onChange, autoDetected }) {
           )}
 
           {results.length > 0 && (
-            <div className="grid max-h-52 grid-cols-5 gap-1 overflow-y-auto">
+            <div className="grid max-h-52 grid-cols-4 gap-1 overflow-y-auto sm:grid-cols-5">
               {results.map((icon) => (
                 <button
                   key={icon.id}
@@ -141,6 +143,7 @@ export function IconPicker({ value, onChange, autoDetected }) {
             </p>
           )}
         </div>
+        </>
       )}
 
       <input type="hidden" name="icon" value={value || ""} />
