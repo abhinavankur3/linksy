@@ -92,16 +92,18 @@ ADMIN_EMAIL=admin@yourdomain.com
 ADMIN_PASSWORD=changeme
 EOF
 
-# Build and run
+# Pull and run
 docker compose up -d
 ```
+
+That's it. The image is pulled from `ghcr.io/abhinavankur3/linksy` and supports both AMD64 and ARM64.
 
 ### Docker Compose
 
 ```yaml
 services:
   linksy:
-    build: .
+    image: ghcr.io/abhinavankur3/linksy:latest
     ports:
       - "3000:3000"
     environment:
@@ -126,7 +128,7 @@ volumes:
 ```yaml
 services:
   linksy:
-    build: .
+    image: ghcr.io/abhinavankur3/linksy:latest
     environment:
       - DATABASE_URL=file:/app/data/linksy.db
       - AUTH_SECRET=${AUTH_SECRET}
