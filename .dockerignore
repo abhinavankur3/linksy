@@ -1,0 +1,12 @@
+node_modules
+.next
+.git
+.claude
+.env*
+!.env.example
+data
+uploads
+*.md
+LICENSE
+docker-compose*.yml
+.DS_Store
