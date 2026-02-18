@@ -50,7 +50,7 @@ export function LinkForm({ onLinkAdded }) {
     <form
       ref={formRef}
       onSubmit={handleSubmit}
-      className="rounded-lg border border-gray-200 bg-white p-4"
+      className="overflow-hidden rounded-lg border border-gray-200 bg-white p-4"
     >
       <h2 className="mb-3 text-sm font-semibold text-gray-900">Add Link</h2>
       {error && (
@@ -59,7 +59,7 @@ export function LinkForm({ onLinkAdded }) {
         </div>
       )}
       <div className="space-y-3">
-        <div className="flex gap-2">
+        <div className="flex flex-col gap-2 sm:flex-row">
           <input
             name="title"
             type="text"
@@ -76,7 +76,7 @@ export function LinkForm({ onLinkAdded }) {
             className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
         </div>
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <IconPicker
             value={icon}
             onChange={handleIconChange}

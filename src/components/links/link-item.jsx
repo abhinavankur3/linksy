@@ -43,7 +43,7 @@ export function LinkItem({ link, onToggle, onDelete, disabled }) {
       <div
         ref={setNodeRef}
         style={style}
-        className="rounded-lg border border-blue-200 bg-blue-50 p-4"
+        className="rounded-lg border border-blue-200 bg-blue-50 p-3 sm:p-4"
       >
         <form onSubmit={handleSaveEdit} className="space-y-3">
           <input
@@ -92,7 +92,7 @@ export function LinkItem({ link, onToggle, onDelete, disabled }) {
     <div
       ref={setNodeRef}
       style={style}
-      className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white p-4"
+      className="flex items-center gap-2 rounded-lg border border-gray-200 bg-white p-3 sm:gap-3 sm:p-4"
     >
       <button
         className="cursor-grab touch-none text-gray-400 hover:text-gray-600"
@@ -153,7 +153,7 @@ export function LinkItem({ link, onToggle, onDelete, disabled }) {
         <button
           onClick={() => setIsEditing(true)}
           disabled={disabled}
-          className="rounded p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+          className="rounded p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
           title="Edit link"
         >
           <svg
@@ -172,7 +172,7 @@ export function LinkItem({ link, onToggle, onDelete, disabled }) {
         <button
           onClick={() => onDelete(link.id)}
           disabled={disabled}
-          className="rounded p-1 text-gray-400 hover:bg-red-50 hover:text-red-600"
+          className="rounded p-2 text-gray-400 hover:bg-red-50 hover:text-red-600"
           title="Delete link"
         >
           <svg

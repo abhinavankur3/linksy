@@ -33,7 +33,7 @@ export function ProfileForm({ profile }) {
         </div>
       )}
 
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
         <div className="h-16 w-16 overflow-hidden rounded-full bg-gray-200">
           {avatarPreview ? (
             <img
@@ -87,7 +87,7 @@ export function ProfileForm({ profile }) {
           Profile URL
         </label>
         <div className="flex items-center">
-          <span className="rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 py-2 text-sm text-gray-500">
+          <span className="shrink-0 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 py-2 text-sm text-gray-500">
             /
           </span>
           <input
@@ -97,7 +97,7 @@ export function ProfileForm({ profile }) {
             required
             defaultValue={profile?.slug || ""}
             pattern="[a-z0-9][a-z0-9\-]{1,46}[a-z0-9]"
-            className="w-full rounded-r-md border border-gray-300 px-3 py-2 text-sm lowercase focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="min-w-0 flex-1 rounded-r-md border border-gray-300 px-3 py-2 text-sm lowercase focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
             placeholder="your-username"
           />
         </div>

@@ -29,7 +29,62 @@ export default async function UsersPage() {
         </Link>
       </div>
 
-      <div className="overflow-hidden rounded-lg border border-gray-200 bg-white">
+      {/* Mobile card layout */}
+      <div className="space-y-3 sm:hidden">
+        {users.map((user) => (
+          <div
+            key={user.id}
+            className="rounded-lg border border-gray-200 bg-white p-4"
+          >
+            <div className="mb-2 flex items-center justify-between">
+              <p className="text-sm font-medium text-gray-900 truncate mr-2">
+                {user.email}
+              </p>
+              <span
+                className={`inline-flex shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ${
+                  user.role === "admin"
+                    ? "bg-purple-100 text-purple-700"
+                    : "bg-gray-100 text-gray-700"
+                }`}
+              >
+                {user.role}
+              </span>
+            </div>
+            <div className="mb-3 flex items-center gap-2 text-sm text-gray-500">
+              {user.profile ? (
+                <a
+                  href={`/${user.profile.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:text-blue-700"
+                >
+                  /{user.profile.slug}
+                </a>
+              ) : (
+                <span>No profile</span>
+              )}
+              <span>&middot;</span>
+              <span
+                className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium ${
+                  user.disabled
+                    ? "bg-red-100 text-red-700"
+                    : "bg-green-100 text-green-700"
+                }`}
+              >
+                {user.disabled ? "Disabled" : "Active"}
+              </span>
+            </div>
+            <UserToggle
+              userId={user.id}
+              disabled={user.disabled}
+              isSelf={user.id === session.user.id}
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop table layout */}
+      <div className="hidden overflow-hidden rounded-lg border border-gray-200 bg-white sm:block">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
