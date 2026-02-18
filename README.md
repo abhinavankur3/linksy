@@ -9,6 +9,7 @@
 
 <p align="center">
   <a href="#features">Features</a> &middot;
+  <a href="#screenshots">Screenshots</a> &middot;
   <a href="#quick-start">Quick Start</a> &middot;
   <a href="#docker">Docker</a> &middot;
   <a href="#configuration">Configuration</a> &middot;
@@ -35,6 +36,12 @@ Existing self-hosted link-in-bio tools are slow, break behind reverse proxies, a
 - **Avatar uploads** &mdash; Local file storage, no external services
 - **Reverse proxy ready** &mdash; Works behind Traefik, Nginx, Cloudflare. No hardcoded protocols.
 - **One-command deploy** &mdash; Single Docker container with two volumes
+
+## Screenshots
+
+| Landing Page | Login | Link Management | Profile Editor | Public Profile |
+|:---:|:---:|:---:|:---:|:---:|
+| ![Landing Page](docs/screenshots/landing-page.png) | ![Login](docs/screenshots/login-page.png) | ![Link Management](docs/screenshots/user-links-add-page.png) | ![Profile Editor](docs/screenshots/user-profile-page.png) | ![Public Profile](docs/screenshots/user-public-page.png) |
 
 ## Tech Stack
 
