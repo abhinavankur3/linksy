@@ -17,22 +17,31 @@ export async function register() {
       });
 
       if (!existing) {
-        const hashed = await bcrypt.hash(adminPassword, 12);
-        await prisma.user.create({
-          data: {
-            email: adminEmail,
-            password: hashed,
-            role: "admin",
-            profile: {
-              create: {
-                displayName: "Admin",
-                slug: "admin",
-                bio: "Site administrator",
+        try {
+          const hashed = await bcrypt.hash(adminPassword, 12);
+          const slug = adminEmail.split("@")[0].toLowerCase().replace(/[^a-z0-9-]/g, "");
+          await prisma.user.create({
+            data: {
+              email: adminEmail,
+              password: hashed,
+              role: "admin",
+              profile: {
+                create: {
+                  displayName: "Admin",
+                  slug: slug || "admin",
+                  bio: "Site administrator",
+                },
               },
             },
-          },
-        });
-        console.log(`[linksy] Admin user created: ${adminEmail}`);
+          });
+          console.log(`[linksy] Admin user created: ${adminEmail}`);
+        } catch (e) {
+          if (e.code === "P2002") {
+            console.log(`[linksy] Admin user already exists, skipping seed`);
+          } else {
+            throw e;
+          }
+        }
       }
     }
   }
