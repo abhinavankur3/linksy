@@ -9,4 +9,5 @@ uploads
 *.md
 LICENSE
 docker-compose*.yml
+docs
 .DS_Store
