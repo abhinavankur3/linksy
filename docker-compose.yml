@@ -1,0 +1,20 @@
+services:
+  linksy:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=file:/app/data/linksy.db
+      - AUTH_SECRET=${AUTH_SECRET}
+      - AUTH_URL=${AUTH_URL:-http://localhost:3000}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - UPLOAD_DIR=/app/uploads
+    volumes:
+      - linksy-data:/app/data
+      - linksy-uploads:/app/uploads
+    restart: unless-stopped
+
+volumes:
+  linksy-data:
+  linksy-uploads:
