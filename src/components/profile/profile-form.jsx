@@ -2,11 +2,13 @@
 
 import { useActionState, useState } from "react";
 import { updateProfile } from "@/actions/profile";
+import { ThemePicker } from "./theme-picker";
 
 export function ProfileForm({ profile }) {
   const [avatarPreview, setAvatarPreview] = useState(
     profile?.avatarPath ? `/api/uploads/${profile.avatarPath}` : null
   );
+  const [selectedTheme, setSelectedTheme] = useState(profile?.theme || "light");
 
   const [state, formAction, isPending] = useActionState(async (_prev, formData) => {
     const result = await updateProfile(formData);
@@ -122,6 +124,9 @@ export function ProfileForm({ profile }) {
           placeholder="A short bio about yourself"
         />
       </div>
+
+      <ThemePicker value={selectedTheme} onChange={setSelectedTheme} />
+      <input type="hidden" name="theme" value={selectedTheme} />
 
       <button
         type="submit"

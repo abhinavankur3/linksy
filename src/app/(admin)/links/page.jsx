@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { LinkList } from "@/components/links/link-list";
+import { QRCodeCard } from "@/components/profile/qr-code-card";
 
 export const metadata = {
   title: "Links | Linksy",
@@ -19,6 +20,9 @@ export default async function LinksPage() {
         include: {
           _count: { select: { clicks: true } },
         },
+      },
+      linkGroups: {
+        orderBy: { position: "asc" },
       },
     },
   });
@@ -38,7 +42,11 @@ export default async function LinksPage() {
           View public page
         </a>
       </div>
-      <LinkList links={profile.links} />
+      <LinkList links={profile.links} groups={profile.linkGroups} ungroupedPosition={profile.ungroupedPosition} />
+
+      <div className="mt-8">
+        <QRCodeCard />
+      </div>
     </div>
   );
 }

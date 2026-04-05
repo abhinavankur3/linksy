@@ -7,7 +7,7 @@ import { updateLink } from "@/actions/links";
 import { IconPicker } from "./icon-picker";
 import { LinkIcon, DefaultLinkIcon } from "./link-icon";
 
-export function LinkItem({ link, onToggle, onDelete, disabled }) {
+export function LinkItem({ link, groups, onToggle, onDelete, onMoveToGroup, disabled }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editTitle, setEditTitle] = useState(link.title);
   const [editUrl, setEditUrl] = useState(link.url);
@@ -134,7 +134,22 @@ export function LinkItem({ link, onToggle, onDelete, disabled }) {
         <p className="truncate text-xs text-gray-500">{link.url}</p>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1 sm:gap-2">
+        {groups && groups.length > 0 && (
+          <select
+            value={link.groupId || ""}
+            onChange={(e) => onMoveToGroup(link.id, e.target.value || null)}
+            disabled={disabled}
+            className="w-16 truncate rounded border border-gray-200 px-1 py-1 text-xs text-gray-500 sm:w-auto"
+            title="Move to group"
+          >
+            <option value="">Ungrouped</option>
+            {groups.map((g) => (
+              <option key={g.id} value={g.id}>{g.name}</option>
+            ))}
+          </select>
+        )}
+
         <button
           onClick={() => onToggle(link.id)}
           disabled={disabled}

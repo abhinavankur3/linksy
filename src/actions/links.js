@@ -31,6 +31,7 @@ export async function createLink(formData) {
   const profile = await getProfileForUser(session.user.id);
   const title = formData.get("title");
   const url = formData.get("url");
+  const groupId = formData.get("groupId") || null;
 
   if (!title || !url) {
     return { error: "Title and URL are required." };
@@ -55,6 +56,7 @@ export async function createLink(formData) {
       title,
       url,
       icon,
+      groupId,
       position: (maxLink?.position ?? -1) + 1,
     },
   });
@@ -118,6 +120,23 @@ export async function toggleLink(linkId) {
   await prisma.link.update({
     where: { id: linkId },
     data: { active: !link.active },
+  });
+
+  revalidatePath("/links");
+  revalidatePath(`/${link.profile.slug}`);
+
+  return { success: true };
+}
+
+export async function moveLinkToGroup(linkId, groupId) {
+  const session = await auth();
+  if (!session?.user?.id) throw new Error("Unauthorized");
+
+  const link = await verifyLinkOwnership(linkId, session.user.id);
+
+  await prisma.link.update({
+    where: { id: linkId },
+    data: { groupId: groupId || null },
   });
 
   revalidatePath("/links");
