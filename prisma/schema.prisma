@@ -78,7 +78,22 @@ model Click {
   hashedIp  String
   clickedAt DateTime @default(now())
 
+  referrer       String?
+  referrerDomain String?
+  userAgent      String?
+  browser        String?
+  browserVersion String?
+  os             String?
+  osVersion      String?
+  deviceType     String?
+  language       String?
+  country        String?
+  utmSource      String?
+  utmMedium      String?
+  utmCampaign    String?
+
   link Link @relation(fields: [linkId], references: [id], onDelete: Cascade)
 
   @@index([linkId, clickedAt])
+  @@index([clickedAt])
 }
