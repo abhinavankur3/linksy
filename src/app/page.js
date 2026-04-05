@@ -56,7 +56,7 @@ export default async function LandingPage() {
             </Link>
           )}
           <a
-            href="https://github.com"
+            href="https://github.com/abhinavankur3/linksy"
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-md border border-gray-300 px-6 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50"

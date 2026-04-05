@@ -1,7 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import { ProfileCard } from "@/components/public/profile-card";
-import { LinkButton } from "@/components/public/link-button";
+import { getTheme } from "@/lib/themes";
+import { getLayoutComponent } from "@/components/public/layouts";
+import { organizeLinksIntoGroups } from "@/lib/group-links";
 
 export const revalidate = 60;
 
@@ -31,25 +32,35 @@ export default async function PublicProfilePage({ params }) {
         where: { active: true },
         orderBy: { position: "asc" },
       },
+      linkGroups: {
+        orderBy: { position: "asc" },
+      },
       user: { select: { disabled: true } },
     },
   });
 
   if (!profile || profile.user.disabled) notFound();
 
+  const theme = getTheme(profile.theme);
+  const LayoutComponent = getLayoutComponent(theme.layout);
+  const { sections } = organizeLinksIntoGroups(
+    profile.links,
+    profile.linkGroups,
+    profile.ungroupedPosition
+  );
+
+  const bgStyle = theme.vars["--bg"]?.includes("gradient")
+    ? { background: theme.vars["--bg"] }
+    : { backgroundColor: theme.vars["--bg"] };
+
   return (
-    <div className="flex min-h-screen flex-col items-center bg-gray-50 px-4 py-12">
-      <div className="w-full max-w-md">
-        <ProfileCard profile={profile} />
-        <div className="mt-6 space-y-3">
-          {profile.links.map((link) => (
-            <LinkButton key={link.id} link={link} />
-          ))}
-        </div>
-        <footer className="mt-8 text-center text-xs text-gray-400">
-          Powered by Linksy
-        </footer>
-      </div>
+    <div
+      style={{ ...theme.vars, ...bgStyle, minHeight: "100vh" }}
+    >
+      <LayoutComponent
+        profile={profile}
+        sections={sections}
+      />
     </div>
   );
 }

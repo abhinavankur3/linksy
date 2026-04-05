@@ -85,8 +85,8 @@ export function IconPicker({ value, onChange, autoDetected }) {
 
       {isOpen && (
         <>
-          <div className="fixed inset-0 z-10 bg-black/50 sm:hidden" onClick={() => setIsOpen(false)} />
-          <div className="fixed inset-x-3 bottom-3 z-20 rounded-lg border border-gray-200 bg-white p-3 shadow-lg sm:absolute sm:inset-auto sm:left-0 sm:top-full sm:z-20 sm:mt-1 sm:w-80">
+          <div className="fixed inset-0 z-40 bg-black/50" onClick={() => setIsOpen(false)} />
+          <div className="fixed inset-x-4 bottom-4 top-auto z-50 flex max-h-[70vh] flex-col rounded-xl border border-gray-200 bg-white p-4 shadow-xl sm:inset-auto sm:left-1/2 sm:top-1/2 sm:w-[32rem] sm:max-h-[80vh] sm:-translate-x-1/2 sm:-translate-y-1/2">
           <input
             type="text"
             value={query}
@@ -113,17 +113,17 @@ export function IconPicker({ value, onChange, autoDetected }) {
           )}
 
           {results.length > 0 && (
-            <div className="grid max-h-52 grid-cols-4 gap-1 overflow-y-auto sm:grid-cols-5">
+            <div className="grid min-h-0 flex-1 grid-cols-4 gap-2 overflow-y-auto sm:grid-cols-6">
               {results.map((icon) => (
                 <button
                   key={icon.id}
                   type="button"
                   onClick={() => handleSelect(icon)}
-                  className="flex flex-col items-center gap-1 rounded-md p-2 hover:bg-gray-100"
+                  className="flex flex-col items-center gap-1.5 rounded-lg p-3 hover:bg-gray-100"
                   title={icon.label}
                 >
-                  <IconSvg icon={icon} size={20} />
-                  <span className="max-w-full truncate text-[10px] text-gray-500">
+                  <IconSvg icon={icon} size={28} />
+                  <span className="max-w-full truncate text-xs text-gray-500">
                     {icon.label}
                   </span>
                 </button>

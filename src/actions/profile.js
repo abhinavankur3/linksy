@@ -7,6 +7,7 @@ import { isValidSlug } from "@/lib/slug";
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
 import { MAX_AVATAR_SIZE, ALLOWED_AVATAR_TYPES } from "@/lib/constants";
+import { THEME_IDS } from "@/lib/themes";
 
 export async function updateProfile(formData) {
   const session = await auth();
@@ -16,9 +17,14 @@ export async function updateProfile(formData) {
   const bio = formData.get("bio") || "";
   const slug = formData.get("slug");
   const avatar = formData.get("avatar");
+  const theme = formData.get("theme") || "light";
 
   if (!displayName || !slug) {
     return { error: "Display name and slug are required." };
+  }
+
+  if (!THEME_IDS.includes(theme)) {
+    return { error: "Invalid theme selected." };
   }
 
   if (!isValidSlug(slug)) {
@@ -64,6 +70,7 @@ export async function updateProfile(formData) {
       displayName,
       bio,
       slug,
+      theme,
       ...(avatarPath && { avatarPath }),
     },
     create: {
@@ -71,6 +78,7 @@ export async function updateProfile(formData) {
       displayName,
       bio,
       slug,
+      theme,
       avatarPath: avatarPath || null,
     },
   });

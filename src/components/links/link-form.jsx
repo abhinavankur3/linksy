@@ -5,7 +5,7 @@ import { createLink } from "@/actions/links";
 import { detectIconFromUrl } from "@/lib/icons";
 import { IconPicker } from "./icon-picker";
 
-export function LinkForm({ onLinkAdded }) {
+export function LinkForm({ onLinkAdded, groups }) {
   const formRef = useRef(null);
   const [error, setError] = useState(null);
   const [isPending, startTransition] = useTransition();
@@ -77,11 +77,24 @@ export function LinkForm({ onLinkAdded }) {
           />
         </div>
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <IconPicker
-            value={icon}
-            onChange={handleIconChange}
-            autoDetected={autoDetected}
-          />
+          <div className="flex flex-1 flex-col gap-2 sm:flex-row sm:items-center">
+            <IconPicker
+              value={icon}
+              onChange={handleIconChange}
+              autoDetected={autoDetected}
+            />
+            {groups && groups.length > 0 && (
+              <select
+                name="groupId"
+                className="rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              >
+                <option value="">No group</option>
+                {groups.map((g) => (
+                  <option key={g.id} value={g.id}>{g.name}</option>
+                ))}
+              </select>
+            )}
+          </div>
           <button
             type="submit"
             disabled={isPending}
