@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { hashIp } from "@/lib/hash";
 import { rateLimit } from "@/lib/rate-limit";
+import { parseClickMetadata } from "@/lib/click-meta";
 
 export async function GET(request) {
   const linkId = request.nextUrl.searchParams.get("id");
@@ -26,15 +27,33 @@ export async function GET(request) {
   const { allowed } = rateLimit(hashedIp);
 
   if (allowed) {
-    // Fire-and-forget: don't block the redirect
-    prisma.click
-      .create({
-        data: {
-          linkId: link.id,
-          hashedIp,
-        },
-      })
-      .catch(console.error);
+    const meta = parseClickMetadata(request, ip);
+
+    // Skip recording bot clicks
+    if (!meta.isBot) {
+      // Fire-and-forget: don't block the redirect
+      prisma.click
+        .create({
+          data: {
+            linkId: link.id,
+            hashedIp,
+            referrer: meta.referrer,
+            referrerDomain: meta.referrerDomain,
+            userAgent: meta.userAgent,
+            browser: meta.browser,
+            browserVersion: meta.browserVersion,
+            os: meta.os,
+            osVersion: meta.osVersion,
+            deviceType: meta.deviceType,
+            language: meta.language,
+            country: meta.country,
+            utmSource: meta.utmSource,
+            utmMedium: meta.utmMedium,
+            utmCampaign: meta.utmCampaign,
+          },
+        })
+        .catch(console.error);
+    }
   }
 
   return NextResponse.redirect(link.url, 302);

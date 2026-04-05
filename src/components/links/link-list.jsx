@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useId, useState, useTransition } from "react";
 import {
   DndContext,
   closestCenter,
@@ -78,6 +78,7 @@ export function LinkList({ links: initialLinks, groups: initialGroups, ungrouped
     buildSections(initialGroups || [], initialUngroupedPos ?? 0)
   );
   const [isPending, startTransition] = useTransition();
+  const dndId = useId();
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -211,6 +212,7 @@ export function LinkList({ links: initialLinks, groups: initialGroups, ungrouped
         </p>
       ) : (
         <DndContext
+          id={`${dndId}-sections`}
           sensors={sensors}
           collisionDetection={closestCenter}
           onDragEnd={handleSectionDragEnd}
@@ -238,6 +240,7 @@ export function LinkList({ links: initialLinks, groups: initialGroups, ungrouped
                             <h3 className="text-sm font-semibold text-gray-500">Ungrouped</h3>
                           </div>
                           <DndContext
+                            id={`${dndId}-ungrouped`}
                             sensors={sensors}
                             collisionDetection={closestCenter}
                             onDragEnd={(e) => handleLinkDragEnd(e, null)}
@@ -282,6 +285,7 @@ export function LinkList({ links: initialLinks, groups: initialGroups, ungrouped
                         <div className="mt-2 space-y-2">
                           {groupLinks.length > 0 ? (
                             <DndContext
+                              id={`${dndId}-group-${group.id}`}
                               sensors={sensors}
                               collisionDetection={closestCenter}
                               onDragEnd={(e) => handleLinkDragEnd(e, group.id)}

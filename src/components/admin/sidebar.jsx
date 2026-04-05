@@ -44,16 +44,18 @@ export function Sidebar({ role, open, onClose }) {
           </button>
         </div>
         <nav className="flex-1 space-y-1 p-3">
-          <SidebarLink href="/links" label="Links" pathname={pathname} onClick={handleNavClick} />
-          <SidebarLink href="/profile" label="Profile" pathname={pathname} onClick={handleNavClick} />
+          <SidebarLink key="links" href="/links" label="Links" pathname={pathname} onClick={handleNavClick} />
+          <SidebarLink key="analytics" href="/links/analytics" label="Analytics" pathname={pathname} onClick={handleNavClick} />
+          <SidebarLink key="profile" href="/profile" label="Profile" pathname={pathname} onClick={handleNavClick} />
           {role === "admin" && (
             <>
               <div className="my-3 border-t border-gray-200" />
               <p className="mb-1 px-3 text-xs font-semibold uppercase text-gray-400">
                 Admin
               </p>
-              <SidebarLink href="/admin" label="Dashboard" pathname={pathname} onClick={handleNavClick} />
-              <SidebarLink href="/admin/users" label="Users" pathname={pathname} onClick={handleNavClick} />
+              <SidebarLink key="admin" href="/admin" label="Dashboard" pathname={pathname} onClick={handleNavClick} />
+              <SidebarLink key="admin-analytics" href="/admin/analytics" label="Analytics" pathname={pathname} onClick={handleNavClick} />
+              <SidebarLink key="admin-users" href="/admin/users" label="Users" pathname={pathname} onClick={handleNavClick} />
             </>
           )}
         </nav>
